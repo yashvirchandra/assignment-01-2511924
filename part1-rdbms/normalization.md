@@ -1,6 +1,6 @@
 # Part 1 — Normalization Analysis
 
-## Anomaly Analysis
+## Q1.1 Anomaly Analysis
 
 ### Insert Anomaly
 Suppose the company hires a fourth sales representative who hasn't done any deals yet. In orders_flat.csv, there is no way to store the new person's details because every row requires an order to exist. The sales rep's ID, name, email, and office address are all tied to order rows — so a rep with no or zero sales simply has no place in the table. We would have to insert a fake order just to record the new persosn's details, which leads to corrupts the data. Affected columns: sales_rep_id, sales_rep_name, sales_rep_email, office_address.
