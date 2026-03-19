@@ -1,1 +1,36 @@
-// 2.1 — Document Design
+
+[
+  {
+    "category": "Electronics",
+    "product_name": "Smartphone X",
+    "brand": "TechBrand",
+    "price": 25000,
+    "warranty_years": 1,
+    "specs": {
+      "ram": "8GB",
+      "storage": "128GB",
+      "battery": "5000mAh"
+    }
+  },
+  {
+    "category": "Groceries",
+    "product_name": "Organic Milk",
+    "brand": "FarmFresh",
+    "price": 60,
+    "expiry_date": {
+      "$date": "2024-12-15T00:00:00Z"
+    },
+    "weight": "1L",
+    "ingredients": ["Milk"],
+    "is_organic": true
+  },
+  {
+    "category": "Clothing",
+    "product_name": "Men T-Shirt",
+    "brand": "FashionHub",
+    "price": 799,
+    "material": "Cotton",
+    "color": "Black",
+    "available_sizes": ["S", "M", "L", "XL"]
+  }
+]
