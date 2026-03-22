@@ -1,114 +1,114 @@
 -- =========================
 -- SETTING UP DATBASE:-
 -- =========================
-CREATE DATABASE IF NOT EXISTS schema_design;
-USE schema_design;
+create database if not exists schema_design;
+use schema_design;
 
 -- =========================
 -- DROP TABLES (SAFE RESET TO REMOVE DUPLICATION):-
 -- =========================
-DROP TABLE IF EXISTS order_details;
-DROP TABLE IF EXISTS orders;
-DROP TABLE IF EXISTS sales_reps;
-DROP TABLE IF EXISTS products;
-DROP TABLE IF EXISTS customers;
+drop table if exists order_details;
+drop table if exists orders;
+drop table if exists sales_reps;
+drop table if exists products;
+drop table if exists customers;
 
 -- =========================
 -- CUSTOMERS TABLE:-
 -- =========================
-CREATE TABLE customers (
-    customer_id VARCHAR(10) PRIMARY KEY,
-    customer_name VARCHAR(100),
-    customer_email VARCHAR(100),
-    customer_city VARCHAR(50)
+create table customers (
+    customer_id varchar(10) primary key,
+    customer_name varchar(100),
+    customer_email varchar(100),
+    customer_city varchar(50)
 );
 
-INSERT INTO customers
-SELECT DISTINCT
+insert into customers
+select distinct
     customer_id,
     customer_name,
     customer_email,
-    cutomer_city
-FROM your_raw_table;
+    customer_city
+from your_raw_table;
 
 -- =========================
 -- PRODUCTS TABLE:-
 -- =========================
-CREATE TABLE products (
-    product_id VARCHAR(10) PRIMARY KEY,
-    product_name VARCHAR(100),
-    unit_price DECIMAL(10,2)
+create table products (
+    product_id varchar(10) primary key,
+    product_name varchar(100),
+    unit_price decimal(10,2)
 );
 
-INSERT INTO products
-SELECT DISTINCT
+insert into products
+select distinct
     product_id,
     product_name,
     unit_price
-FROM your_raw_table;
+from your_raw_table;
 
 -- =========================
 -- SALES REPRESENTATIVES:-
 -- =========================
-CREATE TABLE sales_reps (
-    sales_rep_id VARCHAR(10) PRIMARY KEY,
-    sales_rep_name VARCHAR(100),
-    sales_rep_email VARCHAR(100)
+create table sales_reps (
+    sales_rep_id varchar(10) primary key,
+    sales_rep_name varchar(100),
+    sales_rep_email varchar(100)
 );
 
-INSERT INTO sales_reps
-SELECT DISTINCT
+insert into sales_reps
+select distinct
     sales_rep_id,
     sales_rep_name,
     sales_rep_email
-FROM your_raw_table;
+from your_raw_table;
 
 -- =========================
 -- ORDERS TABLE:-
 -- =========================
-CREATE TABLE orders (
-    order_id VARCHAR(10) PRIMARY KEY,
-    customer_id VARCHAR(10),
-    sales_rep_id VARCHAR(10),
-    order_date DATE,
-    FOREIGN KEY (customer_id) REFERENCES customers(customer_id),
-    FOREIGN KEY (sales_rep_id) REFERENCES sales_reps(sales_rep_id)
+create table orders (
+    order_id varchar(10) primary key,
+    customer_id varchar(10),
+    sales_rep_id varchar(10),
+    order_date date,
+    foreign key (customer_id) references customers(customer_id),
+    foreign key (sales_rep_id) references sales_reps(sales_rep_id)
 );
 
-INSERT INTO orders
-SELECT DISTINCT
+insert into orders
+select distinct
     order_id,
     customer_id,
     sales_rep_id,
-    STR_TO_DATE(order_date, '%d-%m-%Y')
-FROM your_raw_table;
+    str_to_date(order_date, '%d-%m-%Y')
+from your_raw_table;
 
 -- =========================
 -- ORDER DETAILS TABLE :-
 -- =========================
-CREATE TABLE order_details (
-    order_id VARCHAR(10),
-    product_id VARCHAR(10),
-    quantity INT,
-    PRIMARY KEY (order_id, product_id),
-    FOREIGN KEY (order_id) REFERENCES orders(order_id),
-    FOREIGN KEY (product_id) REFERENCES products(product_id)
+create table order_details (
+    order_id varchar(10),
+    product_id varchar(10),
+    quantity int,
+    primary key (order_id, product_id),
+    foreign key (order_id) references orders(order_id),
+    foreign key (product_id) references products(product_id)
 );
 
-INSERT INTO order_details
-SELECT
+insert into order_details
+select
     order_id,
     product_id,
     quantity
-FROM your_raw_table;
+from your_raw_table;
 
 -- =========================
 -- TEST QUERIES:-
 -- =========================
 
 -- to View all tables I created
-SELECT * FROM customers;
-SELECT * FROM products;
-SELECT * FROM sales_reps;
-SELECT * FROM orders;
-SELECT * FROM order_details;
+select * from customers;
+select * from products;
+select * from sales_reps;
+select * from orders;
+select * from order_details;
