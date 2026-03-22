@@ -2,68 +2,66 @@
 -- =========================
 -- Q1: List all customers from Mumbai along with their total order value.
 -- =========================
-SELECT 
+select 
     c.customer_name,
-    SUM(od.quantity * p.unit_price) AS total_spent
-FROM customers c
-JOIN orders o 
-    ON c.customer_id = o.customer_id
-JOIN order_details od 
-    ON o.order_id = od.order_id
-JOIN products p 
-    ON od.product_id = p.product_id
-WHERE c.customer_city = 'Mumbai'
-GROUP BY c.customer_name;
+    sum(od.quantity * p.unit_price) as total_spent
+from customers c
+join orders o 
+    on c.customer_id = o.customer_id
+join order_details od 
+    on o.order_id = od.order_id
+join products p 
+    on od.product_id = p.product_id
+where c.customer_city = 'Mumbai'
+group by c.customer_name;
 
 
 -- =========================
 -- Q2: Find the top 3 products by total quantity sold.
 -- =========================
-SELECT 
+select 
     p.product_name,
-    SUM(od.quantity) AS total_sold
-FROM products p
-JOIN order_details od 
-    ON p.product_id = od.product_id
-GROUP BY p.product_name
-ORDER BY total_sold DESC
-LIMIT 3;
-
+    sum(od.quantity) as total_sold
+from products p
+join order_details od 
+    on p.product_id = od.product_id
+group by p.product_name
+order by total_sold desc
+limit 3;
 
 -- =========================
 -- Q3: List all sales representatives and the number of unique customers they have handled.
 -- =========================
-SELECT 
+select 
     sr.sales_rep_name,
-    COUNT(DISTINCT o.customer_id) AS total_customers
-FROM sales_reps sr
-JOIN orders o 
-    ON sr.sales_rep_id = o.sales_rep_id
-GROUP BY sr.sales_rep_name;
-
+    count(distinct o.customer_id) as total_customers
+from sales_reps sr
+join orders o 
+    on sr.sales_rep_id = o.sales_rep_id
+group by sr.sales_rep_name;
 
 -- =========================
 -- Q4: Find all orders where the total value exceeds 10,000, sorted by value descending.
 -- =========================
-SELECT 
+select 
     o.order_id,
-    SUM(od.quantity * p.unit_price) AS total_value
-FROM orders o
-JOIN order_details od 
-    ON o.order_id = od.order_id
-JOIN products p 
-    ON od.product_id = p.product_id
-GROUP BY o.order_id
-HAVING total_value > 10000
-ORDER BY total_value DESC;
+    sum(od.quantity * p.unit_price) as total_value
+from orders o
+join order_details od 
+    on o.order_id = od.order_id
+join products p 
+    on od.product_id = p.product_id
+group by o.order_id
+having total_value > 10000
+order by total_value desc;;
 
 
 -- =========================
 -- Q5: Identify any products that have never been ordered.
 -- =========================
-SELECT 
+select 
     p.product_name
-FROM products p
-LEFT JOIN order_details od 
-    ON p.product_id = od.product_id
-WHERE od.product_id IS NULL;
+from products p
+left join order_details od 
+    on p.product_id = od.product_id
+where od.product_id is null;
